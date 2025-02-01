@@ -74,7 +74,15 @@ app.get('/api/users/:_id/logs', (req, res) => {
         _id: user._id,
         username: user.username,
         count: logs.length,
-        log: logs
+        log: [
+          ...logs.map( exercise => {
+            return {
+              description: exercise.description,
+              duration: exercise.duration,
+              date: exercise.date.toDateString()
+            }}
+          )
+        ]
       })
     }else{
       res.json({error: 'User not found'})
